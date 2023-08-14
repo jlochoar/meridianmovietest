@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1008680572923",
+    "project_id": "movietest-58738",
+    "storage_bucket": "movietest-58738.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008680572923:android:bc1c1b654cef09b1c29d5e",
+        "android_client_info": {
+          "package_name": "com.meridianmovie.movietest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008680572923-8h2uaoam1vrc5ahrfhnquarr7ke2f85d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3UvWQqVAwcQ85yYWeTsZaL0TdwpvlntY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008680572923-8h2uaoam1vrc5ahrfhnquarr7ke2f85d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
