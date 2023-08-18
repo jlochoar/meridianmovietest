@@ -51,10 +51,8 @@ class _GenreWidgetState extends State<GenreWidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width,
             height: 140,
             child: Card(
-              elevation: 12,
               color: RandomColorGenerator.generateRandomColor(),
               child: Center(
                 child: Text(

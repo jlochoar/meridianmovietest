@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movietest/logic/formater.dart';
 import 'package:movietest/screens/movie_details_screen.dart';
-import 'package:movietest/widgets/poster_widget.dart';
+import 'package:movietest/widgets/future_image_widget.dart';
 import '../models/movie.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class MovieWidget extends StatefulWidget {
   final Movie movie;
@@ -16,51 +16,47 @@ class MovieWidget extends StatefulWidget {
 }
 
 class _MovieWidgetState extends State<MovieWidget> {
-  void _navigateToMovieDetailScreen(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MovieDetailsScreen(movie: widget.movie)));
-  }
+  final AutoSizeGroup _group = AutoSizeGroup();
 
   @override
   Widget build(BuildContext context) {
+    final Size imageSize = Size(MediaQuery.of(context).size.width * 0.8,
+        MediaQuery.of(context).size.height * 0.6);
     return GestureDetector(
       onTap: () {
-        _navigateToMovieDetailScreen(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MovieDetailsScreen(movie: widget.movie)));
       },
       child: Card(
-        elevation: 20,
         color: const Color.fromARGB(255, 24, 24, 24),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, bottom: 10, left: 10, right: 10),
-              child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: PosterWidget(imageUrl: widget.movie.posterPath)),
+            Expanded(
+              child: Center(
+                child: AutoSizeText(
+                  widget.movie.title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  group: _group,
+                  presetFontSizes: const [22, 22, 20, 18],
+                  minFontSize: 18,
+                  maxFontSize: 30,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 176, 171, 171)),
+                ),
+              ),
             ),
-            const Divider(),
-            Text(
-              widget.movie.title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 176, 171, 171)),
-            ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(
-                Formatear.formatearTexto(widget.movie.overview),
-                textAlign: TextAlign.justify,
-                style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white),
+              padding:
+                  EdgeInsets.all(MediaQuery.of(context).size.height * 0.015),
+              child: FutureImageWidget(
+                imageUrl: widget.movie.posterPath,
+                size: imageSize,
               ),
             ),
           ],

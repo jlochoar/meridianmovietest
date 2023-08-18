@@ -9,10 +9,10 @@ class ApiMovieTest {
   static String root = 'https://api.themoviedb.org/3/';
   static String imageFileSize = 'w500';
   static String settings = 'language=es&sort_by=popularity.desc';
+
   static Future<List<Genero>> fetchMovieGenres() async {
     final response = await http
         .get(Uri.parse('${root}genre/movie/list?api_key=$apiKey&$settings'));
-
     final genresList = jsonDecode(response.body)['genres'] as List<dynamic>;
     List<Genero> genres = genresList.map((genreMap) {
       return Genero.fromMap(genreMap);
