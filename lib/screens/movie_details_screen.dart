@@ -4,34 +4,35 @@ import 'package:movietest/models/movie.dart';
 import 'package:movietest/widgets/future_image_widget.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
-  final Movie movie;
+  final Movie _movie;
 
-  const MovieDetailsScreen({super.key, required this.movie});
+  const MovieDetailsScreen({super.key, required Movie movie}) : _movie = movie;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(),
-      body: Renderizer.isDesktop(context)
-          ? landscape(context)
-          : portrait(context),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.black),
+        body: Renderizer.isDesktop(context)
+            ? _landscape(context)
+            : _portrait(context),
+      ),
     );
   }
 
-  Widget landscape(BuildContext context) {
+  Widget _landscape(BuildContext context) {
+    final width = Renderizer.getWidth(context);
     return Row(
       children: [
-        if (movie.backdropPath != null)
+        if (_movie.backdropPath != null)
           FutureImageWidget(
-              imageUrl: movie.backdropPath!,
-              size: Size(MediaQuery.of(context).size.width * 0.4,
-                  MediaQuery.of(context).size.width * 0.4 * 3)),
+              imageUrl: _movie.backdropPath!,
+              size: Size(width * 0.4, width * 0.4 * 3)),
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _buildDetailsList(),
+              child: _detailsList(),
             ),
           ),
         )
@@ -39,45 +40,43 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget portrait(BuildContext context) {
+  Widget _portrait(BuildContext context) {
+    final width = Renderizer.getWidth(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            if (movie.backdropPath != null)
+            if (_movie.backdropPath != null)
               FutureImageWidget(
-                  imageUrl: movie.backdropPath!,
-                  size: Size(MediaQuery.of(context).size.width,
-                      MediaQuery.of(context).size.width * 3 / 4)),
-            _buildDetailsList(),
+                  imageUrl: _movie.backdropPath!,
+                  size: Size(width, width * 3 / 4)),
+            _detailsList(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDetailsList() {
+  Widget _detailsList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildDetailTile("Título", movie.title),
-        _buildDetailTile("Reseña",
-            movie.overview.isNotEmpty ? movie.overview : 'No disponible'),
-        _buildDetailTile("Puntuación", movie.voteAverage.toString()),
-        _buildDetailTile("Contador de votos", movie.voteCount.toString()),
-        _buildDetailTile("Popularidad", movie.popularity.toString()),
-        _buildDetailTile("Fecha de lanzamiento", movie.releaseDate),
-        _buildDetailTile("Idioma original ", movie.originalLanguage),
-        _buildDetailTile("Título original", movie.originalTitle),
+        _detailTile("Título", _movie.title),
+        _detailTile("Reseña",
+            _movie.overview.isNotEmpty ? _movie.overview : 'No disponible'),
+        _detailTile("Puntuación", _movie.voteAverage.toString()),
+        _detailTile("Contador de votos", _movie.voteCount.toString()),
+        _detailTile("Popularidad", _movie.popularity.toString()),
+        _detailTile("Fecha de lanzamiento", _movie.releaseDate),
+        _detailTile("Idioma original ", _movie.originalLanguage),
+        _detailTile("Título original", _movie.originalTitle),
       ],
     );
   }
 
-  Widget _buildDetailTile(String label, String value) {
+  Widget _detailTile(String label, String value) {
     return Card(
-      color: const Color.fromARGB(255, 24, 24, 24),
-      elevation: 2,
       child: ListTile(
         title: Text(
           label,

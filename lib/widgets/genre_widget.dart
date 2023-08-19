@@ -1,20 +1,17 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:movietest/logic/random_color_generator.dart';
 import 'package:movietest/models/genero.dart';
 import '../screens/movie_list_screen.dart';
 
-class GenreWidget extends StatefulWidget {
+class GenreWidget extends StatelessWidget {
   final Genero genre;
+
   const GenreWidget({
-    Key? key,
+    super.key,
     required this.genre,
-  }) : super(key: key);
+  });
 
-  @override
-  State<GenreWidget> createState() => _GenreWidgetState();
-}
-
-class _GenreWidgetState extends State<GenreWidget> {
   void _navigateToMoviesListScreen(BuildContext context, Genero genre) {
     Navigator.push(
       context,
@@ -43,28 +40,20 @@ class _GenreWidgetState extends State<GenreWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _navigateToMoviesListScreen(context, widget.genre);
+        _navigateToMoviesListScreen(context, genre);
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        verticalDirection: VerticalDirection.down,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 140,
-            child: Card(
-              color: RandomColorGenerator.generateRandomColor(),
-              child: Center(
-                child: Text(
-                  textAlign: TextAlign.center,
-                  widget.genre.name,
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+      child: Card(
+        color: RandomColorGenerator.generateRandomColor(),
+        child: Center(
+          child: AutoSizeText(
+            genre.name,
+            overflow: TextOverflow.clip,
+            maxLines: 2,
+            textScaleFactor: 1.6,
+            minFontSize: 2,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-        ],
+        ),
       ),
     );
   }
